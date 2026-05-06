@@ -1,13 +1,13 @@
 #!/bin/bash
-#Basic  counter and its variations
-#Este progama basico, trbajaremos comando basicos, el programa sera dividio en 4 tipo de contadores, cado uno con sus caracteristicas o  "features, en cada caso particual se explicara la caractreristicas del mismo y se el dara unas opciones al usuario 
-#Una discula de ante mano por la Ortografia  :P
- #declaramos una funcion para no copiar y pegar lo mismo inifnitas veces
-#Ademas vamos a declarar super vriables, las cuales seran las calculadoras por separado, luego mosntraremos
-#el main menu en la pantalla
+# Basic  counter and its variations
+# Este progama basico, trbajaremos comando basicos, el programa sera dividio en 4 tipo de contadores, cado uno con sus caracteristicas o  "features, en cada caso particual se explicara la caractreristicas del mismo y se el dara unas opciones al usuario 
+# Una discula de ante mano por la Ortografia  :P
+ # declaramos una funcion para no copiar y pegar lo mismo inifnitas veces
+# Ademas vamos a declarar super vriables, las cuales seran las calculadoras por separado, luego mosntraremos
+# el main menu en la pantalla
 
 basic_counter() {
-#en este contador, el sistema contara de el 1 al 100, es el mas basico
+# en este contador, el sistema contara de el 1 al 100, es el mas basico
 while true; do
 
 	    echo "You choose option 1"
@@ -60,19 +60,19 @@ while true; do
 	echo	"      3.Advance()"
 	echo	"      4.Master()"
 
-	#Hacemos que el usario escoja un tipo de contador
+	# Hacemos que el usario escoja un tipo de contador
 
-	read option  #El sistema leera, la opcion
+	read option  # El sistema leera, la opcion
 
 	case  $option in # se desplegara una calcualdora, o case de las 4 segun la opcion escogida
 
-	  1)basic_counter #muestra la super variable declarada con las lineas del contador basica
+	  1)basic_counter # muestra la super variable declarada con las lineas del contador basica
 		;;
-	  2)medium_counter #muestra la super variable declarada con las lineas del contador medium
+	  2)medium_counter # muestra la super variable declarada con las lineas del contador medium
 		;;
-	  3)advance_counter #muestra la super variable declarada con las lineas del contador advance
+	  3)advance_counter # muestra la super variable declarada con las lineas del contador advance
 		;;
-	  4)master_counter #muestra la super variable declarada con las lineas del contador master
+	  4)master_counter # muestra la super variable declarada con las lineas del contador master
 		;;
   	  *)echo "Opción inválida"
 		;;
@@ -81,4 +81,4 @@ while true; do
 }
 
 
-main_menu #mostramos el progama en la pantalla
+main_menu # mostramos el progama en la pantalla
