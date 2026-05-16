@@ -1,0 +1,69 @@
+#!/bin/bash
+#Buenas trades, mi nombre es Daniel Eduardo Gonzalez Lopez, este es es un codigo que meustra la relaciond el angulo y el alcance que tiene un proyectil en una caida parabolica, con  velocidad incial de 30 m/s
+# Datos propuesto pro ejercicio, generamos las variables para usarlas desapues en los calculos de el alcance del objeto
+v0=30 #velocidad incial del objeto
+g=9.8 # la aceleraciond e la gravedad en la tierra
+
+# Variables para guardar el máximo alcance
+max_alcance=0  #se igualan a cero para inicar las dos al mismo tiempo y desde cero
+mejor_angulo=0
+
+# Crea un archivo txt y lo vacia cada vez que se ejecuta el programa, asi se mustran solo datos actuales
+> alcances.txt
+
+# Esto es un especie de echo, sin embargo es mas organizado ademas de poder generar tablas de datos como requerimos en este ejercicio
+printf "%-10s %-15s %-15s\n" \
+#este comando es paraa el encabezado, mustra los tres textos aliniados, desigancoles un espacio de 10 o de 15 espacios en la pantalla, el s es para denotar que es texto uncimanete
+"Angulo" "Alcance(m)" "Tiempo(s)"
+
+# BUCLE PRINCIPAL
+# Recorre los ángulos desde 0 hasta 90 de 5 en 5
+
+for ((angulo=0; angulo<=90; angulo+=5))
+do
+ # como la calcualdora basica de bash usa radianes, primero, hacemos la conversion de grados a radianes, luego hacemos los calculos remplazando asi hayamos la componente vertical y horizontal-
+
+    radianes=$(echo "scale=10; \
+    $angulo * 4*a(1) / 180" | bc -l)
+#luego multiplicamos la v0 por el coseno del angulo en radianos por cada  angulo, para hayar la componene horiozontal
+    v0x=$(echo "scale=10; \
+    $v0 * c($radianes)" | bc -l)
+
+#ahora multipl;icamos el seno de cada angulo por el seno apra hayar  la componente vertical
+
+    v0y=$(echo "scale=10; \
+    $v0 * s($radianes)" | bc -l)
+
+# Ahora con la formula del dopcuemnto averiguamos para cado angulo el tiempo total de vuelo, que era (2 * v0)/g
+
+    tiempo=$(echo "scale=10; \
+    (2 * $v0y) / $g" | bc -l)
+# Alcance horizontal R = v0x * tiempo en cada angulo dependiendo la duracion de la caida
+    alcance=$(echo "scale=10; \
+    $v0x * $tiempo" | bc -l)
+
+#Ahora mostramos en una tabla parecida a la anterior los datos en la pantalla, con la diferencia de que en la pirmera colmna, se da 10 espacios, para unicamente numeros enteros, en la segunda y tercera columna, 15 espacios para numeros decimales con dos cifras
+
+    printf "%-10d %-15.2f %-15.2f\n" \
+    $angulo $alcance $tiempo
+#Ahora vamos a poner los datos de cada angulo y el resultado de cada operacion en el archivo txt, el >> loq eu hace es guardar consecutivamente los datos uno depues del otro
+
+    echo "$angulo $alcance $tiempo" \
+    >> alcances.txt
+#como tenemos ahora los datos guardados, los podemos comprara para econtrar los datos de mayor alcance y el mejor angulo correspondiente, seleccionando el angulo con mayor distancia recorida
+    comparacion=$(echo "$alcance > $max_alcance" | bc)
+
+    if [ "$comparacion" -eq 1 ]
+    then
+        max_alcance=$alcance
+        mejor_angulo=$angulo
+    fi
+
+done
+# se mustran los resultados finales del la comparacion y se dtermina que angulo es el mas optimo para tener mas distancia recorrida
+echo ""
+echo "Maximum range found:"
+echo "Best angle: $mejor_angulo grados"
+
+printf "Maximum range: %.2f metros\n" \
+$max_alcance
